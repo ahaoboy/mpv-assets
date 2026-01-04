@@ -1,0 +1,43 @@
+name: update
+
+permissions:
+  contents: write
+
+on:
+  push:
+  schedule:
+    - cron: "0 0 * * *"
+  pull_request:
+  workflow_dispatch:
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    name: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: install 7z zip
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y p7zip-full zip jq
+      - name: download
+        run: |
+          node download.js
+
+      - name: release
+        uses: ncipollo/release-action@v1
+        with:
+          # name: ${{ steps.get_tag.outputs.tag }}
+          # tag: ${{ steps.get_tag.outputs.tag }}
+          tag: "nightly"
+          name: "nightly"
+          artifacts: dist/*.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
+          allowUpdates: true
+          commit: main
+          replacesArtifacts: true
