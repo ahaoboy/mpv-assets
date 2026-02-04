@@ -39,18 +39,19 @@ jobs:
           repo: ahaoboy/mpv
           name: ^mpv-.*-x86_64-pc-windows-msvc$
           name_is_regexp: true
-          path: mpv-qjs
 
       - name: zip mpv-qjs
         run: |
-          mkdir -p ./mpv-v3
-          EXTRA_DIR=$(find ./mpv-qjs -maxdepth 1 -type d -name "mpv-*" | head -n 1)
-          if [ -d "$EXTRA_DIR" ]; then
-            echo "Moving files from $EXTRA_DIR to ./mpv-qjs/"
-            mv "$EXTRA_DIR"/* ./mpv-qjs/
-            rmdir "$EXTRA_DIR"
+          TARGET_DIR=$(find . -maxdepth 1 -type d -name "mpv-*-x86_64-pc-windows-msvc" | head -n 1)
+          if [ -n "$TARGET_DIR" ]; then
+              echo "Renaming $TARGET_DIR to ./mpv-qjs"
+              mv "$TARGET_DIR" ./mpv-qjs
+          else
+              echo "Error: Target directory not found"
+              exit 1
           fi
 
+          mkdir -p ./mpv-v3
           7z x dist/mpv-v3-win.7z -o./mpv-v3 -y
 
           cp -r mpv-v3/doc/ mpv-v3/mpv/ mpv-v3/installer/ ./mpv-qjs/
