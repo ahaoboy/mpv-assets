@@ -57,7 +57,7 @@ jobs:
           cp -r mpv-v3/doc/ mpv-v3/mpv/ mpv-v3/installer/ ./mpv-qjs/
           cp mpv-v3/updater.bat ./mpv-qjs/
 
-          (cd mpv-qjs && zip -r ../dist/mpv-qjs.zip .)
+          (cd mpv-qjs && zip -r ../dist/mpv-qjs-win.zip .)
 
       - name: release
         uses: ncipollo/release-action@v1
