@@ -30,34 +30,34 @@ jobs:
           mkdir dist -p
           node download.js
 
-      - name: Download mpv-qjs
-        uses: dawidd6/action-download-artifact@v3
-        with:
-          github_token: ${{secrets.GITHUB_TOKEN}}
-          workflow: build.yml
-          # name: mpv-v0.41.0-dev-g5dffe4488-pr1-21635437047-x86_64-pc-windows-msvc
-          repo: ahaoboy/mpv
-          name: ^mpv-.*-x86_64-pc-windows-msvc$
-          name_is_regexp: true
+      # - name: Download mpv-qjs
+      #   uses: dawidd6/action-download-artifact@v3
+      #   with:
+      #     github_token: ${{secrets.GITHUB_TOKEN}}
+      #     workflow: build.yml
+      #     # name: mpv-v0.41.0-dev-g5dffe4488-pr1-21635437047-x86_64-pc-windows-msvc
+      #     repo: ahaoboy/mpv
+      #     name: ^mpv-.*-x86_64-pc-windows-msvc$
+      #     name_is_regexp: true
 
-      - name: zip mpv-qjs
-        run: |
-          TARGET_DIR=$(find . -maxdepth 1 -type d -name "mpv-*-x86_64-pc-windows-msvc" | head -n 1)
-          if [ -n "$TARGET_DIR" ]; then
-              echo "Renaming $TARGET_DIR to ./mpv-qjs"
-              mv "$TARGET_DIR" ./mpv-qjs
-          else
-              echo "Error: Target directory not found"
-              exit 1
-          fi
+      # - name: zip mpv-qjs
+      #   run: |
+      #     TARGET_DIR=$(find . -maxdepth 1 -type d -name "mpv-*-x86_64-pc-windows-msvc" | head -n 1)
+      #     if [ -n "$TARGET_DIR" ]; then
+      #         echo "Renaming $TARGET_DIR to ./mpv-qjs"
+      #         mv "$TARGET_DIR" ./mpv-qjs
+      #     else
+      #         echo "Error: Target directory not found"
+      #         exit 1
+      #     fi
 
-          mkdir -p ./mpv-v3
-          7z x dist/mpv-v3-win.7z -o./mpv-v3 -y
+      #     mkdir -p ./mpv-v3
+      #     7z x dist/mpv-v3-win.7z -o./mpv-v3 -y
 
-          cp -r mpv-v3/doc/ mpv-v3/mpv/ mpv-v3/installer/ ./mpv-qjs/
-          cp mpv-v3/updater.bat ./mpv-qjs/
+      #     cp -r mpv-v3/doc/ mpv-v3/mpv/ mpv-v3/installer/ ./mpv-qjs/
+      #     cp mpv-v3/updater.bat ./mpv-qjs/
 
-          (cd mpv-qjs && zip -r ../dist/mpv-qjs-win.zip .)
+      #     (cd mpv-qjs && zip -r ../dist/mpv-qjs-win.zip .)
 
       - name: release
         uses: ncipollo/release-action@v1
