@@ -76,7 +76,7 @@ jobs:
         run: |
           # Replace first line with current time comment, keep rest as-is
           echo "<!-- $(date -u '+%Y-%m-%d %H:%M:%S UTC') -->" > readme_new.md
-          tail -n +2 readme.md >> README.md
+          tail -n +2 README.md >> README.md
           mv readme_new.md README.md
           cat README.md
 
