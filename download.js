@@ -48,7 +48,7 @@ async function downloadFfmpeg() {
     "https://api.github.com/repos/BtbN/FFmpeg-Builds/releases/latest", headers
   ).then((r) => r.json());
   const ffmpegUrl = assets.find((i) =>
-    i.name.startsWith("ffmpeg-master-latest-win64-lgpl.zip")
+    i.name.startsWith("ffmpeg-master-latest-win64-gpl.zip")
   ).browser_download_url;
   await download(ffmpegUrl, "./dist/ffmpeg.zip");
 }
