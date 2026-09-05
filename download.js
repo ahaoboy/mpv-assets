@@ -9,6 +9,7 @@ const headers = {
 }
 
 async function download(url, filePath) {
+  console.log(`Downloading ${url} to ${filePath}`);
   const buf = await fetch(url).then((r) => r.arrayBuffer(), headers);
   fs.writeFileSync(filePath, new Uint8Array(buf));
 }
